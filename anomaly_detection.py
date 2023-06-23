@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import matplotlib
 
 from pyod.models.iforest import IForest
 import pyod.utils.data
