@@ -18,9 +18,9 @@ def data_generation(train_samples, test_samples, features, contamination):
 
     Args:
         train_samples (int): How many training data sets to make
-        test_samples (_type_): How many test data sets to make
-        features (_type_): How many features each data should include
-        contamination (_type_): Percentage of data predicted to be an outlier
+        test_samples (int): How many test data sets to make
+        features (int): How many features each data should include
+        contamination (int): Percentage of data predicted to be an outlier
 
     Returns:
         X_train = np.array: an array of training values, based on Gaussian distribution
@@ -32,13 +32,13 @@ def data_generation(train_samples, test_samples, features, contamination):
 
 def apply_Iforest():
     #Create instance
-    model = IForest() #could put in an expected amount of anomalous data
+    model = IForest()
 
     #Train model
     model.fit(data_generation(100, 10, 10, 0.1)[0])
 
     #Evaluate test data for anomalies
-    scores = model.decision_function(data_generation(100, 10, 10, 0.1)[0])
+    scores = model.decision_function(data_generation(100, 10, 10, 0.1)[1])
     return scores
     
 def graph_data(X_train, X_test):
@@ -46,7 +46,7 @@ def graph_data(X_train, X_test):
     fig, axs = plt.subplots(figsize=(5, 2.7), layout='constrained')
     y = np.array(range(0, 100))
 
-    axs.plot(X_train[0], X_train[1])
+    axs.plot(X_train[0], y)
     plt.show()
 
     #Graph X_test data ***In Progress***
