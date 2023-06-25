@@ -23,14 +23,23 @@ def data_generation(train_samples, test_samples, features, contamination):
         contamination (int): Percentage of data predicted to be an outlier
 
     Returns:
-        X_train = np.array: an array of training values, based on Gaussian distribution
-        X_test = np.array:  an array of test values, based on Gaussian distribution
+        X_train = (np.array): an array of training values, based on Gaussian distribution
+        X_test = (np.array):  an array of test values, based on Gaussian distribution
     """
     X_train, X_test, _, _ = pyod.utils.data.generate_data(n_train=train_samples, n_test=test_samples, n_features=features, contamination=contamination, random_state=42)
     print("[*] Data Generated")
     return X_train, X_test
 
 def apply_Iforest(X_train, X_test):
+    """Applies Iforest algorithm to detect anomalies in data
+
+    Args:
+        X_train (np.array): Training data (see data_generation())
+        X_test (np.array): Test data (see data_generation())
+
+    Returns:
+        Scores = (np.array): an array of anomaly score values from the evaluated test data
+    """
     #Create instance
     model = IForest()
 
@@ -42,14 +51,29 @@ def apply_Iforest(X_train, X_test):
     return scores
     
 def graph_data(X_train, X_test):
-    #Graph X_Train data ***In Progress***
-    fig, axs = plt.subplots(figsize=(5, 2.7), layout='constrained')
+    """Generates graphs of data input
+
+    Args:
+        X_train (np.array): Training data (see data_generation())
+        X_test (np.array): Test data (see data_generation())
+    """
+    plt.minorticks_on()
+    
+    #Graph X_Train data
+    plt.subplots(figsize=(11, 7), layout='constrained')
     y = np.array(range(0, 10))
 
-    axs.plot(X_train[0], y)
+    for i in range(0, len(X_train)):
+        plt.scatter(X_train[i], y)
     plt.show()
 
     #Graph X_test data ***In Progress***
+    plt.subplots(figsize=(11, 7), layout='constrained')
+    y = np.array(range(0, 10))
+
+    for i in range(0, len(X_test)):
+        plt.scatter(X_test[i], y)
+    plt.show()
 
 train_data, test_data = data_generation(100, 10, 10, 0.1)
 data_scores = apply_Iforest(train_data, test_data)
