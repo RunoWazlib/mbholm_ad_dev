@@ -16,7 +16,7 @@ print(f"y_test: \n{fake_data[3]}")
 samples = 100
 features = 10
 contamination = 0.1
-X_train, _, _, _ = pyod.utils.data.generate_data(n_train=samples, n_features=features, contamination=contamination)
+X_train, _, _, _ = pyod.utils.data.generate_data(n_train=samples, n_features=features, contamination=contamination, random_state=42)
 print("[*] Training Data Generated")
 
 #Graph X_Train data ***In Progress***
@@ -36,7 +36,7 @@ model.fit(X_train)
 #Generate test data
 samples = 10
 features = 10
-X_test, _, _, _ = pyod.utils.data.generate_data(n_test=samples, n_features=features, contamination=contamination)
+X_test, _, _, _ = pyod.utils.data.generate_data(n_test=samples, n_features=features, contamination=contamination, random_state=42)
 print("[*] Test Data Generated")
 
 #Evaluate test data for anomalies
