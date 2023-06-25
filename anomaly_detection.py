@@ -30,31 +30,34 @@ def data_generation(train_samples, test_samples, features, contamination):
     print("[*] Data Generated")
     return X_train, X_test
 
-def apply_Iforest():
+def apply_Iforest(X_train, X_test):
     #Create instance
     model = IForest()
 
     #Train model
-    model.fit(data_generation(100, 10, 10, 0.1)[0])
+    model.fit(X_train)
 
     #Evaluate test data for anomalies
-    scores = model.decision_function(data_generation(100, 10, 10, 0.1)[1])
+    scores = model.decision_function(X_test)
     return scores
     
 def graph_data(X_train, X_test):
     #Graph X_Train data ***In Progress***
     fig, axs = plt.subplots(figsize=(5, 2.7), layout='constrained')
-    y = np.array(range(0, 100))
+    y = np.array(range(0, 10))
 
     axs.plot(X_train[0], y)
     plt.show()
 
     #Graph X_test data ***In Progress***
 
-data_scores = apply_Iforest()
-#Smaller values are less anomalous, Larger
+train_data, test_data = data_generation(100, 10, 10, 0.1)
+data_scores = apply_Iforest(train_data, test_data)
 print("[-] Anomaly scores: ")
 i = 0
 for score in data_scores:
     print(f"Score {i+1}: {score}")
     i += 1
+
+#Smaller values are less anomalous, Larger
+graph_data(train_data, test_data)
