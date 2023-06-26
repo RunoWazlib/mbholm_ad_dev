@@ -13,7 +13,7 @@ def pyod_data_test():
     print(f"y_train: \n{fake_data[2]}")
     print(f"y_test: \n{fake_data[3]}")
 
-def data_generation(train_samples, test_samples, features, contamination):
+def test_data_generation(train_samples, test_samples, features, contamination):
     """Generates a sample set of data for use in the IForest algorithm
 
     Args:
@@ -30,12 +30,17 @@ def data_generation(train_samples, test_samples, features, contamination):
     print("[*] Data Generated")
     return X_train, X_test
 
+def retrieve_data(filename): # ***In Progress***
+    #XML Parsing
+    data = None
+    return data
+
 def apply_Iforest(X_train, X_test):
     """Applies Iforest algorithm to detect anomalies in data
 
     Args:
-        X_train (np.array): Training data (see data_generation())
-        X_test (np.array): Test data (see data_generation())
+        X_train (np.array): Training data (see test_data_generation())
+        X_test (np.array): Test data (see test_data_generation())
 
     Returns:
         Scores = (np.array): an array of anomaly score values from the evaluated test data
@@ -54,8 +59,8 @@ def graph_data(X_train, X_test, anomaly_score):
     """Generates graphs of data input
 
     Args:
-        X_train (np.array): Training data (see data_generation())
-        X_test (np.array): Test data (see data_generation())
+        X_train (np.array): Training data (see test_data_generation())
+        X_test (np.array): Test data (see test_data_generation())
     """
     plt.minorticks_on()
     plt.subplots(figsize=(11, 7), layout='constrained')
@@ -83,7 +88,7 @@ def graph_data(X_train, X_test, anomaly_score):
             plt.plot(X_test[i])
     plt.show()
 
-train_data, test_data = data_generation(100, 10, 10, 0.1)
+train_data, test_data = test_data_generation(100, 10, 10, 0.1)
 
 #Add another outlier to `test_data`
 test_data = np.append(test_data, [[50, 100, 30 ,70, 10, 20, 30, 2, 10, 1]], axis=0)
