@@ -1,6 +1,7 @@
 # mbholm_ad_dev
 
-This project is designed for the Holmstrom Lab at the University of Kansas (Follow above link).
+This project is designed for the Holmstrom Lab at the University of Kansas (Follow link below).
+https://www.theholmstromlab.com/
 
 We seek to develop a machine learning algorithm that can detect Single Molecule FRET (smFRET) Bursts free from arbitrary threshold values
 
