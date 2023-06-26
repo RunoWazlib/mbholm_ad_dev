@@ -50,7 +50,7 @@ def apply_Iforest(X_train, X_test):
     scores = model.decision_function(X_test)
     return scores
     
-def graph_data(X_train, X_test):
+def graph_data(X_train, X_test, anomaly_score):
     """Generates graphs of data input
 
     Args:
@@ -58,30 +58,43 @@ def graph_data(X_train, X_test):
         X_test (np.array): Test data (see data_generation())
     """
     plt.minorticks_on()
-    
-    #Graph X_Train data
     plt.subplots(figsize=(11, 7), layout='constrained')
     y = np.array(range(0, 10))
 
+    #Graph X_Train data
+    plt.title("X_Train data", y=1.0)
     for i in range(0, len(X_train)):
-        plt.scatter(X_train[i], y)
+        plt.scatter(y, X_train[i])
     plt.show()
 
-    #Graph X_test data ***In Progress***
-    plt.subplots(figsize=(11, 7), layout='constrained')
-    y = np.array(range(0, 10))
-
+    #Graph X_test data
+    plt.title("X_test data", y=1.0)
     for i in range(0, len(X_test)):
-        plt.scatter(X_test[i], y)
+        plt.scatter(y, X_test[i])
+    plt.show()
+
+    #Graph Anomalies
+    plt.title("Plot of Anomalies", y=1.0)
+    for i in range(len(X_test)):
+        if anomaly_score[i] < 0:
+            plt.scatter(y, X_test[i])
+        if anomaly_score[i] > 0:
+            plt.scatter(y, X_test[i])
+            plt.plot(X_test[i])
     plt.show()
 
 train_data, test_data = data_generation(100, 10, 10, 0.1)
+
+#Add another outlier to `test_data`
+test_data = np.append(test_data, [[50, 100, 30 ,70, 10, 20, 30, 2, 10, 1]], axis=0)
+
 data_scores = apply_Iforest(train_data, test_data)
 print("[-] Anomaly scores: ")
 i = 0
 for score in data_scores:
     print(f"Score {i+1}: {score}")
+    print(f"Values: {test_data[i]}\n")
     i += 1
 
-#Smaller values are less anomalous, Larger
-graph_data(train_data, test_data)
+#Smaller values are less anomalous, Larger values are more anomalous
+graph_data(train_data, test_data, data_scores)
